@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.new_collections {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 40px 0;
+    /* min-height: 90vh; */
+    margin-bottom: 100px;
+}
+
+.new_collections h1 {
+    margin-top: 50px;
+    color: rgb(65, 63, 63);
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.new_collections hr {
+    width: 200px;
+    height: 6px;
+    border-radius: 10px;
+    background-color: rgb(69, 67, 67);
+    border: none;
+}
+
+.collections {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 50px;
+}

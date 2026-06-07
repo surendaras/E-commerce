@@ -1,0 +1,27 @@
+.info-page {
+    padding: 40px 24px;
+    max-width: 850px;
+    margin: 0 auto;
+    color: #000;
+}
+
+.info-page h1 {
+    margin-bottom: 12px;
+    color: #000;
+}
+
+.contact-details {
+    margin-top: 16px;
+    color: #000;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+.contact-details a {
+    color: #000;
+    text-decoration: none;
+}
+
+.contact-details .contact-row {
+    margin: 8px 0;
+}
