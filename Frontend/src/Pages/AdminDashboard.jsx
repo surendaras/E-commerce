@@ -23,6 +23,7 @@ const formatDate = (date) => {
 const AdminDashboard = () => {
   const { adminOrders, updateAdminOrder, deleteOrder } = useOrders()
   const [details, setDetails] = useState({})
+  const [successMessage, setSuccessMessage] = useState('')
 
   const handleDetailChange = (orderId, field, value) => {
     setDetails((currentDetails) => ({
@@ -41,10 +42,13 @@ const AdminDashboard = () => {
   })
 
   const moveOrder = (order, status) => {
+    const statusLabel = status === ORDER_STATUS.OUT_FOR_DELIVERY ? 'Out for Delivery' : 'Delivered'
     updateAdminOrder(order.id, {
       ...getOrderDetails(order),
       status,
     })
+    setSuccessMessage(`✓ Order moved to ${statusLabel}`)
+    setTimeout(() => setSuccessMessage(''), 3000)
   }
 
   return (
@@ -131,7 +135,19 @@ const AdminDashboard = () => {
                     onChange={(event) => handleDetailChange(order.id, 'adminNote', event.target.value)}
                   />
                   <div className='dashboard-button-row'>
-                    {order.status === ORDER_STATUS.CANCELLATION_REVIEW ? (
+                    {order.status === ORDER_STATUS.CANCELLED ? (
+                      <button
+                        className='dashboard-danger'
+                        type='button'
+                        onClick={() => deleteOrder(order.id)}
+                      >
+                        Delete order
+                      </button>
+                    ) : order.status === ORDER_STATUS.DELIVERED ? (
+                      <div style={{ padding: '12px', backgroundColor: '#d4edda', borderRadius: '4px', color: '#155724', textAlign: 'center' }}>
+                        <strong>✓ Delivery Completed</strong>
+                      </div>
+                    ) : order.status === ORDER_STATUS.CANCELLATION_REVIEW ? (
                       <>
                         <button
                           className='dashboard-primary'
@@ -148,13 +164,13 @@ const AdminDashboard = () => {
                           Delete order
                         </button>
                       </>
-                    ) : order.status === ORDER_STATUS.CANCELLED ? (
+                    ) : order.status === ORDER_STATUS.OUT_FOR_DELIVERY ? (
                       <button
-                        className='dashboard-danger'
+                        className='dashboard-secondary'
                         type='button'
-                        onClick={() => deleteOrder(order.id)}
+                        onClick={() => moveOrder(order, ORDER_STATUS.DELIVERED)}
                       >
-                        Delete order
+                        Mark Delivered
                       </button>
                     ) : (
                       <>
@@ -175,6 +191,11 @@ const AdminDashboard = () => {
                       </>
                     )}
                   </div>
+                  {successMessage && (
+                    <div style={{ marginTop: '12px', padding: '10px', backgroundColor: '#d4edda', borderRadius: '4px', color: '#155724', textAlign: 'center' }}>
+                      {successMessage}
+                    </div>
+                  )}
                 </div>
               </div>
             </article>
